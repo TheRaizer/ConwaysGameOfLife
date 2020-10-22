@@ -1,0 +1,10 @@
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\bin\Debug\ConwaysGameOfLife.exe.config
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\bin\Debug\ConwaysGameOfLife.exe
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\bin\Debug\ConwaysGameOfLife.pdb
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.Form1.resources
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.Properties.Resources.resources
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.csproj.GenerateResource.cache
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.exe
+C:\Users\Admin\source\repos\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.pdb

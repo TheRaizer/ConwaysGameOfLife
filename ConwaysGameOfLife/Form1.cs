@@ -7,10 +7,9 @@ namespace ConwaysGameOfLife
     public partial class Form1 : Form
     {
         private readonly Timer gfxTimer;
-        private int generations = 0;
+        public static int generations = 0;
         private Rectangle resolution = Screen.PrimaryScreen.Bounds;
         public Grid grid;
-        private bool startLife = false;
 
         public Form1()
         {
@@ -30,7 +29,7 @@ namespace ConwaysGameOfLife
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine(e.Location);
+            PaintWithMouse(e.Location);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -38,10 +37,6 @@ namespace ConwaysGameOfLife
             if (e.KeyCode == Keys.Escape)
             {
                 Close();
-            }
-            if (e.KeyCode == Keys.S)
-            {
-                startLife = true;
             }
             if (e.KeyCode == Keys.P)
             {
@@ -51,7 +46,7 @@ namespace ConwaysGameOfLife
 
         private void GfxTimer_Tick(object sender, EventArgs e)
         {
-            if (startLife && !grid.pause)
+            if (!grid.pause)
             {
                 generations++;
                 GenerationCount.Text = "Generation: " + generations;
@@ -61,16 +56,13 @@ namespace ConwaysGameOfLife
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            if (startLife)
+            if (generations > 1)
             {
-                if (generations > 1)
-                {
-                    grid.RedrawCheckGrid(e.Graphics);
-                }
-                else
-                {
-                    grid.InitializeGrid(e.Graphics);
-                }
+                grid.RedrawCheckGrid(e.Graphics);
+            }
+            else
+            {
+                grid.InitializeGrid(e.Graphics);
             }
         }
 
@@ -84,6 +76,24 @@ namespace ConwaysGameOfLife
         private void label1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void PaintWithMouse(Point e)
+        {
+            for (int y = 0; y < grid.maxY; y++)
+            {
+                for(int x = 0; x < grid.maxX; x++)
+                {
+                    Cell cell = grid.currentGrid[x, y];
+                    if ((e.X > cell.x) && (e.X < cell.x * Grid.CELL_LENGTH) && 
+                        (e.Y > cell.y) && (e.Y < cell.y * Grid.CELL_LENGTH))
+                    {
+                        Console.WriteLine("On");
+                        cell.alive = !cell.alive;
+                        return;
+                    }
+                }
+            }
         }
     }
 }

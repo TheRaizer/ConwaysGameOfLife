@@ -1,4 +1,6 @@
-﻿namespace ConwaysGameOfLife
+﻿using System.Drawing;
+
+namespace ConwaysGameOfLife
 {
     public class Cell
     {

@@ -1,11 +1,12 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace ConwaysGameOfLife
 {
     public class Grid
     {
-        private readonly int maxX;
-        private readonly int maxY;
+        public readonly int maxX;
+        public readonly int maxY;
         public Cell[,] currentGrid;
         public Cell[,] outputGrid;
         public bool drawnVertLines = false;
@@ -15,7 +16,7 @@ namespace ConwaysGameOfLife
 
         private const int MAX_LIFESPAN = int.MaxValue;
         public const int CELL_LENGTH = 5;
-        public bool pause = false;
+        public bool pause = true;
 
         public Grid(int _maxX, int _maxY)
         {
@@ -33,8 +34,6 @@ namespace ConwaysGameOfLife
                 {
                     if (!pause)
                         CheckMooreNeighbours(currentGrid[x, y]);
-                    else
-                        DrawCell(currentGrid[x, y], gfx);
                 }
             }
 
@@ -42,7 +41,8 @@ namespace ConwaysGameOfLife
             {
                 for (int y = 0; y < maxY; y++)
                 {
-                    currentGrid[x, y].alive = outputGrid[x, y].alive;
+                    if(!pause)
+                        currentGrid[x, y].alive = outputGrid[x, y].alive;
                     DrawCell(currentGrid[x, y], gfx);
                 }
             }
@@ -63,6 +63,7 @@ namespace ConwaysGameOfLife
                     DrawCell(currentGrid[x, y], gfx);
                 }
             }
+            Form1.generations++;
         }
 
         public void DrawCell(Cell cell, Graphics gfx)

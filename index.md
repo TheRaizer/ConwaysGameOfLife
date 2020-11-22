@@ -1,6 +1,6 @@
 # The Steps Taken for my implementation of Conway's Game of Life
 
-{% include youtubePlayer.html id="02PaegDTA4c" %} 
+{% include youtubePlayer.html id="hkVPwFVoCUw" %} 
 
 ## The Classes
 ### The Cell Class
@@ -37,7 +37,7 @@ public class Grid
         private readonly SolidBrush aliveBrush = new SolidBrush(Color.Black);
         private readonly SolidBrush deadBrush = new SolidBrush(Color.White);
 
-        private const int MAX_LIFESPAN = int.MaxValue;
+        private const int MAX_LIFESPAN = int.MaxValue; // This value can be modified. It is set as max value so life span does not affect the cells.
         public const int CELL_LENGTH = 5;
         public bool pause = true;
 
@@ -202,7 +202,7 @@ public class Grid
 
 # Breaking Down the Grid Class
 ## Initialization of the Grid
-To initialize the grid I simply loop through the height of the window(maxY) and the width of the window(maxX) an
+To initialize the grid I simply loop through the height of the window(maxY) and the width of the window(maxX) creating a Cell for both the output and current grid. The If statement is only used to display the cross that you see at the beginning of the video.
 
 ```csharp
 public void InitializeGrid(Graphics gfx)
@@ -221,6 +221,26 @@ public void InitializeGrid(Graphics gfx)
                 }
             }
             Form1.generations++;
+        }
+```
+
+## Drawing Cells
+To draw cells onto the screen we use this function. It takes a given cell as well as the Graphics class from the windows form. We then generate a rectangle based on the x and y of the given cell which will be used to call FillRectangle(). But before doing that we check if the cell is alive or not. If it is alive we draw it with the aliveBrush(black) and if it is dead we draw it with the deadBrush(white).
+
+```csharp
+public void DrawCell(Cell cell, Graphics gfx)
+        {
+            Rectangle rect = new Rectangle(cell.x * CELL_LENGTH, cell.y * CELL_LENGTH, CELL_LENGTH, CELL_LENGTH);
+            if (cell.alive)
+            {
+                //Black cells are alive
+                gfx.FillRectangle(aliveBrush, rect);
+            }
+            else
+            {
+                //White cells are dead
+                gfx.FillRectangle(deadBrush, rect);
+            }
         }
 ```
 
@@ -262,5 +282,48 @@ private void CheckMooreNeighbours(Cell cell)
                 }
             }
             CheckRules(cell, outputGrid[cell.x, cell.y], liveNeighbours);
+        }
+```
+
+## The Rule Set
+The Cells in my grid act according to these rules.
+    1. If the current cell is alive and has less than 2 live neighbours it dies of under population
+    2. If the current cell is alive and has more then 3 live neighbours it dies of over population
+    3. If the current cell has passed its life span it will die
+    4. If the current cell is dead and it has exactly 3 live neighbours it comes to life as if from reproduction
+    5. If the current cell has either 2 or 3 neighbours it will age.
+
+```csharp
+private void CheckRules(Cell cellToCheck, Cell cellToChange, int liveNeighbours)
+        {
+            ///<summary>
+            /// These are the rules that each cell must follow in accordance
+            /// to conways game of life. They can be modified to create different effects.
+            /// The cell to check will always come from the current grid and the cell to change
+            /// is always from the output grid.
+            /// 
+            /// The reason we need to only change the output grids node is so that all the nodes
+            /// being changed are being affected by neighbours from the same generation.
+            /// 
+            /// The int liveNeighbours is used to check for the rules.
+            ///</summary>
+            
+            if (cellToCheck.alive)
+            {
+                if (liveNeighbours < 2 || liveNeighbours > 3 || cellToCheck.lifeSpan > MAX_LIFESPAN)
+                {
+                    cellToChange.alive = false;
+                    cellToChange.lifeSpan = 0;
+                }
+                else if (liveNeighbours == 2 || liveNeighbours == 3)
+                {
+                    cellToChange.lifeSpan++;
+                }
+            }
+            else if (liveNeighbours == 3)
+            {
+                cellToChange.alive = true;
+                cellToChange.lifeSpan = 0;
+            }
         }
 ```

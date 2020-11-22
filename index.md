@@ -287,11 +287,11 @@ private void CheckMooreNeighbours(Cell cell)
 
 ## The Rule Set
 The Cells in my grid act according to these rules.
-    1. If the current cell is alive and has less than 2 live neighbours it dies of under population
-    2. If the current cell is alive and has more then 3 live neighbours it dies of over population
-    3. If the current cell has passed its life span it will die
-    4. If the current cell is dead and it has exactly 3 live neighbours it comes to life as if from reproduction
-    5. If the current cell has either 2 or 3 neighbours it will age.
+1. If the current cell is alive and has less than 2 live neighbours it dies of under population
+2. If the current cell is alive and has more then 3 live neighbours it dies of over population
+3. If the current cell has passed its life span it will die
+4. If the current cell is dead and it has exactly 3 live neighbours it comes to life as if from reproduction
+5. If the current cell has either 2 or 3 neighbours it will age.
 
 ```csharp
 private void CheckRules(Cell cellToCheck, Cell cellToChange, int liveNeighbours)

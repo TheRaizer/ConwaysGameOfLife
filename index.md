@@ -62,9 +62,9 @@ public class Grid
 
 
             ///<summary>
-            /// Must make sure to replace all the current grid nodes with the output grid nodes
-            /// before checking the neighbours. The reason for doing this is so all nodes are being
-            /// affected only by nodes in the same generation.
+            /// Must make sure to replace all the current grid cells with the output grid cells
+            /// before checking the neighbours. The reason for doing this is so all cells are being
+            /// affected only by cells in the same generation.
             ///</summary>
 
             for (int x = 0; x < maxX; x++)

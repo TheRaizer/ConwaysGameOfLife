@@ -1,4 +1,7 @@
 # The Steps Taken for my implementation of Conway's Game of Life
+
+{% include youtubePlayer.html id="02PaegDTA4c" %} 
+
 ## The Classes
 ### The Cell Class
 This class manages each individual cell. It contains the position of the cell, the life span and whether it is alive or not. The cell is represented as a black square with the dimensions set as a constant.
@@ -197,6 +200,7 @@ public class Grid
     }
 ```
 
+# Breaking Down the Grid Class
 ## Initialization of the Grid
 To initialize the grid I simply loop through the height of the window(maxY) and the width of the window(maxX) an
 

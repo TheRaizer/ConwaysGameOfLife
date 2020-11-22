@@ -37,6 +37,13 @@ namespace ConwaysGameOfLife
                 }
             }
 
+
+            ///<summary>
+            /// Must make sure to replace all the current grid nodes with the output grid nodes
+            /// before checking the neighbours. The reason for doing this is so all nodes are being
+            /// affected only by nodes in the same generation.
+            ///</summary>
+
             for (int x = 0; x < maxX; x++)
             {
                 for (int y = 0; y < maxY; y++)
@@ -56,7 +63,7 @@ namespace ConwaysGameOfLife
                 {
                     currentGrid[x, y] = new Cell(x, y);
                     outputGrid[x, y] = new Cell(x, y);
-                    if (x == maxX / 2 || y == maxY / 2)
+                    if (x == maxX / 2 || y == maxY / 2) // creates the cross shape
                     {
                         currentGrid[x, y].alive = true;
                     }

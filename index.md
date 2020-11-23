@@ -1,7 +1,10 @@
 # The Steps Taken for my implementation of Conway's Game of Life
 
 {% include youtubePlayer.html id="hkVPwFVoCUw" %} 
+"\
 
+
+"
 ## The Classes
 ### The Cell Class
 This class manages each individual cell. It contains the position of the cell, the life span and whether it is alive or not. The cell is represented as a black square with the dimensions set as a constant.
@@ -21,7 +24,9 @@ public class Cell
         public int lifeSpan = 0;
     }
 ```
+"\
 
+"
 ### The Grid Class
 The grid class manages every Cell in a grid whose size is dependent on the windows form screen size. It initializes the grid and is in charge of evaluating the state of the cells within the grid given a rule set.
 
@@ -199,7 +204,10 @@ public class Grid
         }
     }
 ```
+"\
 
+
+"
 # Breaking Down the Grid Class
 ## Initialization of the Grid
 To initialize the grid I simply loop through the height of the window(maxY) and the width of the window(maxX) creating a Cell for both the output and current grid. The If statement is only used to display the cross that you see at the beginning of the video.
@@ -243,7 +251,9 @@ public void DrawCell(Cell cell, Graphics gfx)
             }
         }
 ```
+"\
 
+"
 ## Checking For Neighbours
 In my implementation I decided to use Moore neighbours instead of Von Neumann. This means that I account for the eight surrounding squares. The code below is how I scan for the Moore neighbours around each cell in the grid. If a neighbour is found and is alive I will add to the number of live neighbours. This count of neighbours will be later used to evaluate the rule set of my choice.
 
@@ -284,14 +294,16 @@ private void CheckMooreNeighbours(Cell cell)
             CheckRules(cell, outputGrid[cell.x, cell.y], liveNeighbours);
         }
 ```
+"\
 
+"
 ## The Rule Set
 The Cells in my grid act according to these rules.
 1. If the current cell is alive and has less than 2 live neighbours it dies of under population
 2. If the current cell is alive and has more then 3 live neighbours it dies of over population
 3. If the current cell has passed its life span it will die
 4. If the current cell is dead and it has exactly 3 live neighbours it comes to life as if from reproduction
-5. If the current cell has either 2 or 3 neighbours it will age.
+5. If the current cell has either 2 or 3 neighbours it will age
 
 ```csharp
 private void CheckRules(Cell cellToCheck, Cell cellToChange, int liveNeighbours)
@@ -324,6 +336,62 @@ private void CheckRules(Cell cellToCheck, Cell cellToChange, int liveNeighbours)
             {
                 cellToChange.alive = true;
                 cellToChange.lifeSpan = 0;
+            }
+        }
+```
+"\
+
+"
+## Checking in the Grid
+This is a simple function that returns a boolean of whether the given cell is within the bounds of the grid. It is used to make sure that we don't attempt to check for neighbour cells outside of the grid.
+
+```csharp
+private bool IsInGrid(int xPos, int yPos, out Cell cell)
+        {
+            ///<summary>
+            /// The job of this method is to calculate whether a given x and y
+            /// are contained in the current grid. If it is it will return true and 
+            /// send out the cell at x and y in the current grid.
+            ///</summary>
+            
+            if (xPos >= 0 && xPos < maxX && yPos >= 0 && yPos < maxY)
+            {
+                cell = currentGrid[xPos, yPos];
+                return true;
+            }
+            else
+            {
+                cell = null;
+                return false;
+            }
+        }
+```
+"\
+
+"
+## Redrawing the Grid
+This is a function that will be called everytime the windows forms is redrawn onto the screen. That is also why it is given the graphics object. Its job is to run the CheckMooreNeighbours() method on every node in the grid. After that it means that the output grid has been properly changed to fit what the next generation would look like. We then loop through each cell but this time we individually change the values of the current grid to the be equivalent to the output grid while also drawing each cell. The reason we need two seperate pairs of 2 for loops is because we don't want to change what is in the current grid while still checking for neighbours. What this will do is cause cells from the next generation to affect how the cells from the current generation respond to the rule set. We could involve multi-threading however the Graphics object from a windows forms doesn't easily support multi-threading or Async programming.
+
+```csharp
+public void RedrawCheckGrid(Graphics gfx)
+        {
+            for (int x = 0; x < maxX; x++)
+            {
+                for (int y = 0; y < maxY; y++)
+                {
+                    if (!pause)
+                        CheckMooreNeighbours(currentGrid[x, y]);
+                }
+            }
+
+            for (int x = 0; x < maxX; x++)
+            {
+                for (int y = 0; y < maxY; y++)
+                {
+                    if(!pause)
+                        currentGrid[x, y].alive = outputGrid[x, y].alive;
+                    DrawCell(currentGrid[x, y], gfx);
+                }
             }
         }
 ```

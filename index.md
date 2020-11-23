@@ -1,10 +1,10 @@
 # The Steps Taken for my implementation of Conway's Game of Life
 
 {% include youtubePlayer.html id="hkVPwFVoCUw" %} 
-"\
+\
 
 
-"
+
 ## The Classes
 ### The Cell Class
 This class manages each individual cell. It contains the position of the cell, the life span and whether it is alive or not. The cell is represented as a black square with the dimensions set as a constant.
@@ -24,9 +24,9 @@ public class Cell
         public int lifeSpan = 0;
     }
 ```
-"\
+\
 
-"
+
 ### The Grid Class
 The grid class manages every Cell in a grid whose size is dependent on the windows form screen size. It initializes the grid and is in charge of evaluating the state of the cells within the grid given a rule set.
 
@@ -204,10 +204,10 @@ public class Grid
         }
     }
 ```
-"\
+\
 
 
-"
+
 # Breaking Down the Grid Class
 ## Initialization of the Grid
 To initialize the grid I simply loop through the height of the window(maxY) and the width of the window(maxX) creating a Cell for both the output and current grid. The If statement is only used to display the cross that you see at the beginning of the video.
